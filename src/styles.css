@@ -1,3 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
-html, body{min-height:100%;}
-body{height:100vh;}
+html, body{
+    min-height:100%;
+}
+body{
+    height:100vh;
+}
+
+.screen-middle {
+    margin-top: 10%;
+    max-width: 340px;
+}
