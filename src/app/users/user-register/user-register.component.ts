@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../user.service';
+import { User } from '../user.model';
 
 @Component({
   selector: 'app-user-register',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserRegisterComponent implements OnInit {
 
-  constructor() { }
+  user = new User();
+
+  constructor(private service : UserService) { }
 
   ngOnInit(): void {
   }
 
+  save() {
+    this.service.saveUser(this.user);
+    this.user = new User();
+    alert("usuario cadastrado");
+  }
 }
