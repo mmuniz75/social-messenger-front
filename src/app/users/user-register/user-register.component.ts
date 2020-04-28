@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewChildren, QueryList, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChildren } from '@angular/core';
 import { UserService } from '../user.service';
 import { User } from '../user.model';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgTemplateOutlet } from '@angular/common';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-user-register',
@@ -19,12 +18,18 @@ export class UserRegisterComponent implements OnInit {
 
   @ViewChildren('tagMessage') tagMessage:any;
 
-  constructor(private service : UserService, private modalService: NgbModal) { }
+  constructor(private service : UserService) { }
 
   ngOnInit(): void {
   }
 
-  save() {
+  save(form:NgForm) {
+
+    if(!form.valid) {
+      this.showError("Complete os dados do formulario");
+      return;
+    }  
+
     this.loading = true;
     this.service.saveUser(this.user).subscribe(
       response => {
@@ -37,10 +42,15 @@ export class UserRegisterComponent implements OnInit {
     ,ex => {
       this.loading = false;
       console.log(ex)
-      this.message = ex && ex.error && ex.error.message ? ex.error.message : "Erro interno";
-      this.isError = true;
-      this.tagMessage.first.open();
+      let message = ex && ex.error && ex.error.message ? ex.error.message : "Erro interno";
+      this.showError(message);
       }  
     );
+  }
+
+  showError(message : string) {
+    this.message = message;
+    this.isError = true;
+    this.tagMessage.first.open();
   }
 }
