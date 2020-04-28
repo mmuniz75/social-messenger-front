@@ -10,6 +10,7 @@ import { User } from '../user.model';
 })
 export class UserListComponent implements OnInit , OnDestroy{
 
+  loading = false;
   users : User[];
   private userListener:Subscription;
 
@@ -17,9 +18,12 @@ export class UserListComponent implements OnInit , OnDestroy{
 
   ngOnInit(): void {
     this.userListener = this.service.usersListener.subscribe( 
-        usersList => this.users = usersList
+        usersList => {
+          this.users = usersList;
+          this.loading = false;
+        }  
     );
-
+    this.loading = true;  
     this.service.fechtUsers();
   }
 

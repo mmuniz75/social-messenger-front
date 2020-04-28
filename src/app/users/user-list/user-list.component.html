@@ -1,4 +1,9 @@
-<div class="screen-middle">
+<div *ngIf="loading" class="d-flex justify-content-center screen-middle">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<div *ngIf="!loading" class="screen-middle align-items-center">
     <ul class="list-group" *ngFor="let user of users">
         <li class="list-group-item">{{ user.name }}</li>
     </ul>
