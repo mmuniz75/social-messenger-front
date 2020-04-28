@@ -8,12 +8,16 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserRegisterComponent } from './users/user-register/user-register.component';
 import { UserListComponent } from './users/user-list/user-list.component';
 import { FormsModule } from '@angular/forms';
+import { MessageComponent } from './UI/message/message.component';
+import { SpinnerComponent } from './UI/spinner/spinner.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserRegisterComponent,
-    UserListComponent
+    UserListComponent,
+    MessageComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,

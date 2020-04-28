@@ -1,4 +1,7 @@
-<div class="screen-middle">
+<message [isError]="isError" [text]="message" #tagMessage></message>
+<spinner *ngIf="loading"></spinner>
+
+<div *ngIf="!loading" class="screen-middle">
     <div class="form-group">
       <label for="exampleInputNome">Nome</label>
       <input class="form-control" id="exampleInputNome" [(ngModel)]="user.name">

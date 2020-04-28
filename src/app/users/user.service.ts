@@ -25,8 +25,8 @@ export class UserService {
   }
 
   saveUser(user:User) {
-    this.http.post<User>(`${environment.SERVER_URL}/users`,user)
-      .subscribe();
+    return this.http.post<User>(`${environment.SERVER_URL}/users`,user);
+      
   }
 
 }

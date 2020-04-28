@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { UserService } from '../user.service';
 import { User } from '../user.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
   selector: 'app-user-register',
@@ -9,16 +11,36 @@ import { User } from '../user.model';
 })
 export class UserRegisterComponent implements OnInit {
 
+  loading = false;
   user = new User();
+  
+  message = '';
+  isError = false;
 
-  constructor(private service : UserService) { }
+  @ViewChildren('tagMessage') tagMessage:any;
+
+  constructor(private service : UserService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
   }
 
   save() {
-    this.service.saveUser(this.user);
-    this.user = new User();
-    alert("usuario cadastrado");
+    this.loading = true;
+    this.service.saveUser(this.user).subscribe(
+      response => {
+        this.loading = false;
+        this.user = new User();
+        this.message = "Usuário cadastrado";
+        this.isError = false;
+        this.tagMessage.first.open();
+      }
+    ,ex => {
+      this.loading = false;
+      console.log(ex)
+      this.message = ex && ex.error && ex.error.message ? ex.error.message : "Erro interno";
+      this.isError = true;
+      this.tagMessage.first.open();
+      }  
+    );
   }
 }
